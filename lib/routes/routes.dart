@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:urban_match/pages/app.dart';
-import 'package:urban_match/pages/event.screen.dart';
-import 'package:urban_match/pages/home.screen.dart';
-import 'package:urban_match/pages/profile.screen.dart';
+import 'package:urban_match/pages/event/event.screen.dart';
+import 'package:urban_match/pages/home/home.screen.dart';
+import 'package:urban_match/pages/profile/profile.screen.dart';
 import 'package:urban_match/pages/splash.sceen.dart';
 
 part 'routes.gr.dart';
