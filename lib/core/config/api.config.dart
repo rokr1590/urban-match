@@ -84,7 +84,7 @@ class DevelopmentEndpointConfig extends EndpointConfig {
   DevelopmentEndpointConfig()
       : super(
           cos:
-              'https://sandbox.chamberofsecrets.8club.co', // TODO: Change back to cos: 'https://staging.cos.8club.co',
+              'https://6847d529ec44b9f3493e5f06.mockapi.io/api', // TODO: Change back to cos: 'https://staging.cos.8club.co',
           cosVersion: 'v1',
         );
 }
