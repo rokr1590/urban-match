@@ -6,8 +6,24 @@ import 'package:urban_match/core/theme/styles.dart';
 import 'package:urban_match/routes/routes.dart';
 
 @RoutePage()
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Navigate to app screen after 1 second
+    Future.delayed(const Duration(seconds: 1), () {
+      if (mounted) {
+        context.router.popAndPush(const AppRoute());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +36,20 @@ class SplashScreen extends StatelessWidget {
             const Icon(
               LucideIcons.mapPin,
               size: 64,
-              color: AppColors.primaryLavender,
+              color: AppColors.tertiaryTangerine,
             ),
             const SizedBox(height: 16),
             Text(
               'Urban Match',
               style: Styles.h1Bold.copyWith(
-                color: AppColors.primaryLavender,
+                color: AppColors.tertiaryTangerine,
               ),
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () {
-                context.router.push(AppRoute());
-              },
-              child: Text('Button'),
-            )
+            // Optional: Add a loading indicator
+            const CircularProgressIndicator(
+              color: AppColors.tertiaryTangerine,
+            ),
           ],
         ),
       ),
