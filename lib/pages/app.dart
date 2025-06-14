@@ -46,122 +46,127 @@ class _AppState extends ConsumerState<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      // Set the scaffold background to your dark color
-      backgroundColor: AppColors.obsidian100,
-      routes: const [
-        HomeScreenRoute(),
-        EventsScreenRoute(),
-        ProfileScreenRoute(),
-      ],
-      // Add transition builder to prevent white flash
-      transitionBuilder: (context, child, animation) {
-        return Container(
-          color: AppColors.obsidian100,
-          child: child,
-        );
-      },
-      bottomNavigationBuilder: (context, tabsRouter) {
-        final double itemWidth = MediaQuery.of(context).size.width / 3;
-        final double sliderWidth = itemWidth / 3;
-        final double sliderOffset = tabsRouter.activeIndex * itemWidth +
-            (itemWidth / 2) -
-            (sliderWidth / 2);
-        const double glowWidth = 60.0;
-        final double glowOffset = tabsRouter.activeIndex * itemWidth +
-            (itemWidth / 2) -
-            (glowWidth / 2);
-
-        return Stack(
-          children: [
-            // Custom Bottom Navigation Bar
-            Container(
-              height: 100,
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  _buildNavItem(
-                    icon: Icons.home,
-                    label: 'Home',
-                    index: 0,
-                    isActive: tabsRouter.activeIndex == 0,
-                    onTap: () => _onItemTapped(0, tabsRouter),
-                  ),
-                  _buildNavItem(
-                    icon: Icons.event,
-                    label: 'Events',
-                    index: 1,
-                    isActive: tabsRouter.activeIndex == 1,
-                    onTap: () => _onItemTapped(1, tabsRouter),
-                  ),
-                  _buildNavItem(
-                    icon: Icons.person,
-                    label: 'Profile',
-                    index: 2,
-                    isActive: tabsRouter.activeIndex == 2,
-                    onTap: () => _onItemTapped(2, tabsRouter),
-                  ),
-                ],
-              ),
-            ),
-
-            // Glowing effect for selected index
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              left: glowOffset,
-              child: AnimatedBuilder(
-                animation: _glowAnimation,
-                builder: (context, child) {
-                  return GlowingGradientSemicircle(
-                    width: glowWidth,
-                    height: 28,
-                    opacity: _glowAnimation.value,
-                  );
-                },
-              ),
-            ),
-
-            // Animated slider for selected index
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              left: sliderOffset,
-              child: AnimatedBuilder(
-                animation: _glowAnimation,
-                builder: (context, child) {
-                  return Container(
-                    width: sliderWidth,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: AppColors.tertiaryTangerine
-                          .withOpacity(_glowAnimation.value),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.tertiaryTangerine
-                              .withOpacity(0.5 * _glowAnimation.value),
-                          blurRadius: 8,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+    return PopScope(
+      canPop: false,
+      child: SafeArea(
+        child: AutoTabsScaffold(
+          // Set the scaffold background to your dark color
+          backgroundColor: AppColors.obsidian100,
+          routes: const [
+            HomeScreenRoute(),
+            EventsScreenRoute(),
+            ProfileScreenRoute(),
           ],
-        );
-      },
+          // Add transition builder to prevent white flash
+          transitionBuilder: (context, child, animation) {
+            return Container(
+              color: AppColors.obsidian100,
+              child: child,
+            );
+          },
+          bottomNavigationBuilder: (context, tabsRouter) {
+            final double itemWidth = MediaQuery.of(context).size.width / 3;
+            final double sliderWidth = itemWidth / 3;
+            final double sliderOffset = tabsRouter.activeIndex * itemWidth +
+                (itemWidth / 2) -
+                (sliderWidth / 2);
+            const double glowWidth = 60.0;
+            final double glowOffset = tabsRouter.activeIndex * itemWidth +
+                (itemWidth / 2) -
+                (glowWidth / 2);
+
+            return Stack(
+              children: [
+                // Custom Bottom Navigation Bar
+                Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1A1A1A),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        blurRadius: 10,
+                        offset: const Offset(0, -5),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      _buildNavItem(
+                        icon: Icons.home,
+                        label: 'Home',
+                        index: 0,
+                        isActive: tabsRouter.activeIndex == 0,
+                        onTap: () => _onItemTapped(0, tabsRouter),
+                      ),
+                      _buildNavItem(
+                        icon: Icons.event,
+                        label: 'Events',
+                        index: 1,
+                        isActive: tabsRouter.activeIndex == 1,
+                        onTap: () => _onItemTapped(1, tabsRouter),
+                      ),
+                      _buildNavItem(
+                        icon: Icons.person,
+                        label: 'Profile',
+                        index: 2,
+                        isActive: tabsRouter.activeIndex == 2,
+                        onTap: () => _onItemTapped(2, tabsRouter),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Glowing effect for selected index
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  left: glowOffset,
+                  child: AnimatedBuilder(
+                    animation: _glowAnimation,
+                    builder: (context, child) {
+                      return GlowingGradientSemicircle(
+                        width: glowWidth,
+                        height: 28,
+                        opacity: _glowAnimation.value,
+                      );
+                    },
+                  ),
+                ),
+
+                // Animated slider for selected index
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  left: sliderOffset,
+                  child: AnimatedBuilder(
+                    animation: _glowAnimation,
+                    builder: (context, child) {
+                      return Container(
+                        width: sliderWidth,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: AppColors.tertiaryTangerine
+                              .withOpacity(_glowAnimation.value),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.tertiaryTangerine
+                                  .withOpacity(0.5 * _glowAnimation.value),
+                              blurRadius: 8,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 

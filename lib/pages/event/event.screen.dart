@@ -51,7 +51,9 @@ class _EventsPageState extends ConsumerState<EventsScreen>
 
     return Scaffold(
       body: eventsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => Container(
+            color: AppColors.obsidian98,
+            child: Center(child: CircularProgressIndicator.adaptive())),
         error: (error, stack) => _buildErrorWidget(error.toString()),
         data: (state) => _buildMapWithBottomSheet(state),
       ),
@@ -204,7 +206,6 @@ class _EventsPageState extends ConsumerState<EventsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildBottomSheetHandle(),
           if (event.imageUrl != null)
             Container(
               height: 200,
